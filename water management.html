@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Water Management System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #0f2027;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            width: 200px;
+            height: 100vh;
+            background-color: #1c3b47;
+            padding: 20px;
+        }
+        .sidebar h2 {
+            color: #fff;
+            margin-bottom: 30px;
+        }
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .sidebar ul li {
+            margin-bottom: 20px;
+        }
+        .sidebar ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 16px;
+        }
+        .sidebar ul li a:hover {
+            color: #58a5a9;
+        }
+        /* Main Content */
+        .main {
+            margin-left: 220px;
+            padding: 20px;
+        }
+        .header {
+            margin-bottom: 20px;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+        .header p {
+            color: #b5b5b5;
+        }
+        /* Real-Time Monitoring */
+        .real-time-monitoring {
+            margin-bottom: 40px;
+        }
+        .real-time-monitoring h2 {
+            margin-bottom: 10px;
+        }
+        .map {
+            width: 100%;
+            height: 250px;
+            background-color: #122a32;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            position: relative;
+        }
+        .map input {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: calc(100% - 20px);
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #f0f0f0;
+            color: #333;
+        }
+        .sensor-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .sensor-item {
+            background-color: #122a32;
+            padding: 15px;
+            border-radius: 8px;
+        }
+        .sensor-item h4 {
+            margin: 0 0 5px 0;
+            font-size: 18px;
+        }
+        .sensor-item p {
+            margin: 0;
+            color: #b5b5b5;
+        }
+        /* System Performance */
+        .system-performance {
+            margin-bottom: 40px;
+        }
+        .system-performance h2 {
+            margin-bottom: 10px;
+        }
+        .charts {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+        }
+        .chart {
+            width: 48%;
+            background-color: #122a32;
+            border-radius: 8px;
+            padding: 20px;
+        }
+        .chart h3 {
+            margin: 0 0 20px 0;
+            font-size: 18px;
+        }
+        .chart canvas {
+            width: 100%;
+            height: 150px;
+        }
+        /* Water Valve Control */
+        .water-valve-control h2 {
+            margin-bottom: 10px;
+        }
+        .valve-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .valve-item {
+            background-color: #122a32;
+            padding: 15px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .valve-item p {
+            margin: 0;
+            font-size: 16px;
+        }
+        .valve-item button {
+            background-color: #3a616a;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .valve-item button:disabled {
+            background-color: #666;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2>Water Management System</h2>
+        <ul>
+            <li><a href="#">Summary</a></li>
+            <li><a href="#">Sensors</a></li>
+            <li><a href="#">Valves</a></li>
+            <li><a href="#">Pumps</a></li>
+        </ul>
+    </div>
+
+    <!-- Main content -->
+    <div class="main">
+        <!-- Header -->
+        <div class="header">
+            <h1>Water Supply System Status</h1>
+            <p>Feb 14, 2023 - 10:05 AM</p>
+        </div>
+
+        <!-- Real-Time Monitoring -->
+        <div class="real-time-monitoring">
+            <h2>Real-Time Monitoring</h2>
+            <div class="map">
+                <input type="text" placeholder="Search location">
+            </div>
+            <div class="sensor-list">
+                <div class="sensor-item">
+                    <h4>Sensor 1</h4>
+                    <p>Pressure: 75 psi, Flow: 5 gpm</p>
+                    <p>Status: Online</p>
+                </div>
+                <div class="sensor-item">
+                    <h4>Sensor 2</h4>
+                    <p>Pressure: 69 psi, Flow: 7 gpm</p>
+                    <p>Status: Online</p>
+                </div>
+                <div class="sensor-item">
+                    <h4>Sensor 3</h4>
+                    <p>Pressure: 74 psi, Flow: 6 gpm</p>
+                    <p>Status: Online</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- System Performance -->
+        <div class="system-performance">
+            <h2>System Performance</h2>
+            <div class="charts">
+                <div class="chart">
+                    <h3>Flow Rate Over Time</h3>
+                    <canvas id="flowRateChart"></canvas>
+                </div>
+                <div class="chart">
+                    <h3>Pressure Over Time</h3>
+                    <canvas id="pressureChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Water Valve Control -->
+        <div class="water-valve-control">
+            <h2>Water Valve Control</h2>
+            <div class="valve-list">
+                <div class="valve-item">
+                    <p>System 1</p>
+                    <button>Open</button>
+                </div>
+                <div class="valve-item">
+                    <p>System 2</p>
+                    <button disabled>Closed</button>
+                </div>
+                <div class="valve-item">
+                    <p>System 3</p>
+                    <button>Open</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Placeholder for JavaScript for charts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Flow Rate Over Time Chart
+        var ctx = document.getElementById('flowRateChart').getContext('2d');
+        var flowRateChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['9am', '10am', '11am', '12pm', '1pm'],
+                datasets: [{
+                    label: 'Flow Rate',
+                    data: [5, 6, 4, 8, 7],
+                    borderColor: '#58a5a9',
+                    borderWidth: 2,
+                    fill: false
+                }]
+            }
+        });
+
+        // Pressure Over Time Chart
+        var ctx2 = document.getElementById('pressureChart').getContext('2d');
+        var pressureChart = new Chart(ctx2, {
+            type: 'line',
+            data: {
+                labels: ['9am', '10am', '11am', '12pm', '1pm'],
+                datasets: [{
+                    label: 'Pressure',
+                    data: [75, 74, 73, 72, 74],
+                    borderColor: '#58a5a9',
+                    borderWidth: 2,
+                    fill: false
+                }]
+            }
+        });
+    </script>
+</body>
+</html>
